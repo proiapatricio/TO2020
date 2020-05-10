@@ -5,8 +5,7 @@ Las personas se mueven de forma aleatoria y se grafican de color azul. Las perso
 Si una persona infectada entra en contacto con una persona sana, esta última pasa a estar infectada.
 Si no existen personas sanas, la simulación se reinicia.
 
-Esta implementación está construida de forma intencionalmente ineficiente. El alumno puede modificar todo el código
-mientras que mantenga la funcionalidad.
+Esta implementación está construida de forma intencionalmente ineficiente. Pueden modificar cualquier parte del código siempre y cuando mantengan la misma funcionalidad.
 
 Consignas
 1. Realizar mediciones de performance que permitan diagnosticar el problema.
