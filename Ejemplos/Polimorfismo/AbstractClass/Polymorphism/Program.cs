@@ -49,7 +49,7 @@ namespace Polymorphism
             }
         }
 
-        static IItem ChooseItem(Hero hero)
+        static Item ChooseItem(Hero hero)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace Polymorphism
                 Console.WriteLine("");
                 return ChooseItem(hero);
             }
-        } 
+        }
     }
 
     class Hero
@@ -94,12 +94,12 @@ namespace Polymorphism
             set { mp = Math.Min(Math.Max(value, 0), 100); }
         }
 
-        public List<IItem> Items { get; } = new List<IItem>();
+        public List<Item> Items { get; } = new List<Item>();
 
         public bool IsAlive { get { return HP > 0; } }
         public bool IsDead { get { return !IsAlive; } }
 
-        public void Use(IItem item)
+        public void Use(Item item)
         {
             if (item.ApplyOn(this))
             {
@@ -108,14 +108,14 @@ namespace Polymorphism
         }
     }
 
-    interface IItem
+    abstract class Item
     {
-        bool ApplyOn(Hero hero);
+        public abstract bool ApplyOn(Hero hero);
     }
 
-    class Poison : IItem
+    class Poison : Item
     {
-        public bool ApplyOn(Hero hero)
+        public override bool ApplyOn(Hero hero)
         {
             if (hero.IsDead) return false;
             hero.HP -= 10;
@@ -123,9 +123,9 @@ namespace Polymorphism
         }
     }
 
-    class Elixir : IItem
+    class Elixir : Item
     {
-        public bool ApplyOn(Hero hero)
+        public override bool ApplyOn(Hero hero)
         {
             if (hero.IsDead) return false;
             hero.HP += 20;
@@ -134,9 +134,9 @@ namespace Polymorphism
         }
     }
 
-    class Revive : IItem
+    class Revive : Item
     {
-        public bool ApplyOn(Hero hero)
+        public override bool ApplyOn(Hero hero)
         {
             if (hero.IsAlive) return false;
             hero.HP = hero.MP = 100;
