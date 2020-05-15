@@ -15,6 +15,7 @@ namespace InfectionSimulation
         private const int height = 300;
         private Size size = new Size(width, height);
         private List<GameObject> objects = new List<GameObject>();
+        private List<GameObject>[,] spatialObjects = new List<GameObject>[width, height];
 
         public IEnumerable<GameObject> GameObjects {
             get
@@ -49,22 +50,43 @@ namespace InfectionSimulation
             return rnd.Next(min, max);
         }
 
+        private List<GameObject> GetBucketAt(Point position)
+        {
+            var bucket = spatialObjects[position.X, position.Y];
+            if (bucket == null)
+            {
+                bucket = new List<GameObject>();
+                spatialObjects[position.X, position.Y] = bucket;
+            }
+            return bucket;
+        }
+
         public void Add(GameObject obj)
         {
             objects.Add(obj);
+            GetBucketAt(obj.Position).Add(obj);
         }
 
         public void Remove(GameObject obj)
         {
             objects.Remove(obj);
+            GetBucketAt(obj.Position).Remove(obj);
         }
 
         public void Update()
         {
             foreach (GameObject obj in GameObjects)
             {
+                var oldPosition = obj.Position;
+
                 obj.InternalUpdateOn(this);
                 obj.Position = Mod(obj.Position, size);
+
+                if (obj.Position != oldPosition)
+                {
+                    GetBucketAt(oldPosition).Remove(obj);
+                    GetBucketAt(obj.Position).Add(obj);
+                }
             }
         }
 
@@ -103,7 +125,7 @@ namespace InfectionSimulation
 
         public IEnumerable<GameObject> ObjectsAt(Point pos)
         {
-            return GameObjects.Where(each => each.Position.Equals(pos));
+            return GetBucketAt(pos);
         }
 
     }
