@@ -1,6 +1,4 @@
-En esta carpeta encontrarán una copia de un código que grafica funciones matemáticas. La aplicación está programada para graficar la siguiente función: 
-
-`f(n)=5*(f(n-1)+f(n-2))/(f(n-3))`
+En esta carpeta encontrarán una copia de un código que grafica funciones matemáticas. La aplicación está programada para graficar la siguiente función: `f(n)=5*(f(n-1)+f(n-2))/(f(n-3))`
 
 <p align="center">
   <img width="35%" src="./function.png?raw=true">
